@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import Inicio from './Home/Inicio'
+
 class App extends Component {
   render() {
     return (
@@ -11,8 +13,9 @@ class App extends Component {
           <h1 className="App-title">Quizzr</h1>
         </header>
         <p className="App-intro">
-          O jogo de perguntas e respostas
         </p>
+
+        <Inicio />
       </div>
     );
   }

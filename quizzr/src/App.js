@@ -3,6 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 import Inicio from './Home/Inicio'
+import Categorias from './Jogo/Categorias'
+import Perguntas from './Jogo/Perguntas'
+import Resultado from './Jogo/Resultado'
+import Ranking from './Jogo/Ranking'
 
 class App extends Component {
   render() {
@@ -15,7 +19,7 @@ class App extends Component {
         <p className="App-intro">
         </p>
 
-        <Inicio />
+        <Ranking />
       </div>
     );
   }

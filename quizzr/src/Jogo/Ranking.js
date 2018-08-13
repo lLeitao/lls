@@ -1,24 +1,22 @@
 import React, {Component} from 'react'
-import {Container, List, Image} from 'semantic-ui-react'
+import {Container, List} from 'semantic-ui-react'
+
+import Usuario from './Usuario'
+import Header from './Header'
 
 class Ranking extends Component {
     render() {
         return (
             <div>
+                <Header />
+                
                 <h2>Ranking</h2>
                 <p>Quem é o mestre ???</p>
                 
                 <Container>
                     <List divided verticalAlign='left'>
-                        <List.Item>
-                            <List.Content floated="left">
-                                <Image avatar src=""></Image>
-                                Leitão
-                            </List.Content>
-                            <List.Content floated="right">
-                                500 pontos
-                            </List.Content>
-                        </List.Item>
+                        <Usuario foto="" nome="Leitão" pontos="300" />
+                        <Usuario foto="" nome="Kobrawsk" pontos="260" />
                     </List>
                 </Container>
             </div>

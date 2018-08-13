@@ -1,9 +1,12 @@
 import React from 'react'
 import { Container, Header, Segment, Card, Button } from 'semantic-ui-react'
 
+import Nav from './Header'
+
 const Inicio = props => {
     return (
         <div>
+            <Nav />
             <Container>
                 <Segment>Quizzr</Segment>
                 <Header as='h2'>Jogo de perguntas e respostas</Header>

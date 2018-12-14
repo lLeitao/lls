@@ -1,0 +1,159 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <center>
+                <p>Cadastro de nomes</p>
+
+                <input type="text" id="texto" class="form-control">
+                <br>
+                <button class="btn btn-primary" id="botao">
+                    Enviar
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+            </center>
+            
+        </div>
+
+    </div>
+
+    <br><br>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <center>
+                <p>Lista de nomes</p>
+                <ul class="list-group" id="lista">
+
+                </ul>
+            </center>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    window.onload = () => {
+        const lista = document.querySelector('#lista');
+        const botao = document.querySelector('#botao');
+        const texto = document.querySelector('#texto');
+
+        botao.addEventListener('click', create);
+        lista.addEventListener('click', del);
+        lista.addEventListener('click', edit);
+
+        read();
+    }
+
+    function templateLi(id, nome, element = true) {
+        var html = `
+            ${element ? `<li class="list-group-item">` : ''}
+                ${nome}
+                <i class="btn btn-danger delete fa fa-trash"
+                    style="float:right; margin-left:5px;"
+                    data-id="${id}"></i>
+
+                <i class="btn btn-primary update fa fa-wrench"
+                    style="float:right;"
+                    data-id="${id}"></i>
+                ${element ? `</li>` : ''}`;
+
+        return html;
+    }
+    
+    function read() {
+        lista.innerHTML = '';
+
+        axios.get('/read')
+            .then((response) => {
+                console.log(response);
+
+                response.data.forEach(element => {
+                    lista.innerHTML += templateLi(element.id, element.name);
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            
+
+    }
+
+    function create() {
+        const name = texto.value;
+
+        axios.post('/create', {name})
+            .then((response) => {
+                console.log(response);
+
+                lista.innerHTML += templateLi(response.data[0], name);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    function edit(element) {
+
+        if(!element.target.classList.contains('update')) return;
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.setAttribute('value', '');
+        input.setAttribute('class', 'form-control');
+
+        const pai = element.target.parentElement;
+        const id = element.target.dataset.id;
+
+        pai.innerHTML = "";
+        pai.appendChild(input);
+        
+        input.addEventListener('keydown', update.bind(pai, id, input));
+        input.focus();
+
+    }
+
+    function update(id, input) {
+        const x = event.key;
+
+        if(x == null || x != 'Enter') return;
+        
+        axios.put(`/update/${id}`, {name : input.value})
+            .then( (response) => {
+                if(response.status == 200) {
+                    this.innerHTML = templateLi(id, input.value, false);
+                }
+            })
+            .catch( (error) => {
+                console.log(error);
+            });
+    }
+
+    function del(element) {
+        
+        if(!element.target.classList.contains('delete')) return;
+
+        const id = element.target.dataset.id;
+
+        axios.delete(`/delete/${id}`)
+            .then((response) => {
+                if(response.status == 200) {
+                    lista.removeChild(element.path[1]);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            
+        
+    }
+
+
+</script>

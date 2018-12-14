@@ -1,0 +1,17 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "knex": "^0.16.2",
+    "mysql": "^2.16.0",
+    "restify": "^7.3.0",
+    "restify-errors": "^6.1.1"
+  }
+}
